@@ -13,7 +13,8 @@ Java后端单模块脚手架工程
 - 认证与权限：spring security
 - Token：jwt
 - 其他：lombok
-- 部署方式：Jenkins + Rancher
+- 部署方式：jenkins + rancher
+- JsonApi：swagger
 
 ## 认证及权限
 ### 相关文件及作用

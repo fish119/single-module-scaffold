@@ -35,11 +35,11 @@ public class AccessDecisionManagerImpl implements AccessDecisionManager {
     private final org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
-    * 如需指定某路径无需认证：
-    * if (!url.contains("/api/")) {
-    *   return;
-    * }
-    */
+     * 如需指定某路径无需认证：
+     * if (!url.contains("/api/")) {
+     * return;
+     * }
+     */
     @Override
     public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
         String url = ((FilterInvocation) object).getRequestUrl();
@@ -48,10 +48,13 @@ public class AccessDecisionManagerImpl implements AccessDecisionManager {
         if (configAttributes == null) {
             return;
         }
-        if(authorityCache.getPermitAllUrls().stream().anyMatch(url::equals)){
+        if (!url.contains("/api/")) {
             return;
         }
-        if(HttpMethod.OPTIONS.matches(method)){
+//        if(authorityCache.getPermitAllUrls().stream().anyMatch(url::equals)){
+//            return;
+//        }
+        if (HttpMethod.OPTIONS.matches(method)) {
             return;
         }
         for (GrantedAuthority ga : authentication.getAuthorities()) {

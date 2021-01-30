@@ -1,5 +1,7 @@
 package site.fish.controller.auth;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,7 @@ import java.util.HashMap;
  */
 @RestController
 @RequestMapping("/auth")
+@Api(tags = "01.认证")
 public class AuthController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
@@ -46,6 +49,7 @@ public class AuthController {
      * @param loginVo : loginVo
      * @return    : org.springframework.http.ResponseEntity<?>
      */
+    @ApiOperation("1.登录")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<HashMap<String, String>> login(@RequestBody @Valid LoginVo loginVo) {
         try {
