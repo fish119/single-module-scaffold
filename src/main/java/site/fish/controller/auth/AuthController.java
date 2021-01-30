@@ -47,7 +47,7 @@ public class AuthController {
      * @return    : org.springframework.http.ResponseEntity<?>
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<?> login(@RequestBody @Valid LoginVo loginVo) {
+    public ResponseEntity<HashMap<String, String>> login(@RequestBody @Valid LoginVo loginVo) {
         try {
             UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken(loginVo.getUsername(), loginVo.getPassword());
             final Authentication authentication = authenticationManager.authenticate(upToken);

@@ -17,9 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestController {
     @GetMapping("/test/hello")
-    public String hello(){
-        return "Hello";
+    public ResponseEntity<String> hello() {
+        return ResponseEntity.ok("Hello");
     }
+
     @GetMapping("/api/test")
     public ResponseEntity<String> userTest() {
         return ResponseEntity.ok("User Test");

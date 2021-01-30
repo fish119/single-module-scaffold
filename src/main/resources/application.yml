@@ -5,7 +5,7 @@ server:
 logging:
   config: classpath:logback-spring.xml
   level:
-    root: WARN
+    root: INFO
     org.springframework.web: WARN
     org.springframework.security: WARN
 spring:
@@ -31,12 +31,13 @@ spring:
   jpa:
     hibernate:
       ##如使用Flyway管理数据库，则设置为none，否则可以设置为update
-      ddl-auto: update
+      ddl-auto: none
     show-sql: true
     open-in-view: false
-#  flyway: # flyway 数据库 DDL 版本控制
+  flyway: # flyway 数据库 DDL 版本控制
 ##    enabled: true # 正式环境才开启
-#    clean-disabled: true # 禁用数据库清理
+    clean-disabled: true # 禁用数据库清理
+    schemas: single_module_scaffold
 #    encoding: UTF-8
 #    locations: classpath:/db
     # flyway 会在库中创建此名称元数据表，用于记录所有版本演化和状态,同一个库不同项目可能冲突，可加后缀设置为每个项目一张表来记录
