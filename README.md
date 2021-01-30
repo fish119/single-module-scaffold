@@ -8,7 +8,7 @@ Java后端单模块脚手架工程
 - 基础：spring boot
 - 持久层：spring data jpa
 - 数据库：mysql
-- 数据库版本管理：flyway (TODO)
+- 数据库版本管理：flyway
 - 连接池：hikari
 - 认证与权限：spring security
 - Token：jwt

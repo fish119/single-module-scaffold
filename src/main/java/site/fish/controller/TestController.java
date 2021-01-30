@@ -1,5 +1,6 @@
 package site.fish.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,10 +15,18 @@ import org.springframework.web.bind.annotation.RestController;
  * @date : 2021/1/30 14:04
  */
 @RestController
-@RequestMapping("/test")
 public class TestController {
-    @GetMapping("/hello")
+    @GetMapping("/test/hello")
     public String hello(){
         return "Hello";
+    }
+    @GetMapping("/api/test")
+    public ResponseEntity<String> userTest() {
+        return ResponseEntity.ok("User Test");
+    }
+
+    @GetMapping("/api/adminTest")
+    public ResponseEntity<String> adminTest() {
+        return ResponseEntity.ok("Admin Test");
     }
 }

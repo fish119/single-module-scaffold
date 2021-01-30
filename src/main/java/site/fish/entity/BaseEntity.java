@@ -28,7 +28,7 @@ import java.util.Objects;
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @CreatedDate
@@ -36,7 +36,7 @@ public class BaseEntity implements Serializable {
     private Date createdDate;
 
     @CreatedBy
-    @Column(name = "created_by", updatable = false, length = 64)
+    @Column(name = "created_by", updatable = false, length = 20)
     private String createdBy;
 
     @LastModifiedDate
@@ -44,7 +44,7 @@ public class BaseEntity implements Serializable {
     private Date updatedDate;
 
     @LastModifiedBy
-    @Column(name = "updated_by", length = 64)
+    @Column(name = "updated_by", length = 20)
     private String updatedBy;
 
     @Override

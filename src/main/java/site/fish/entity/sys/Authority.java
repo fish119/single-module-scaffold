@@ -1,0 +1,44 @@
+package site.fish.entity.sys;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.springframework.security.core.GrantedAuthority;
+import site.fish.entity.BaseEntity;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import java.util.HashSet;
+import java.util.Set;
+
+/**
+ * Description: [Authority Entity]
+ * Copyright  : Copyright (c) 2021
+ * Company    : 沈阳云创工业智能技术有限公司
+ *
+ * @author : Morphling
+ * @version : 1.0
+ * @date : 2021/1/30 18:35
+ */
+@EqualsAndHashCode(callSuper = true,exclude = {"roles"})
+@Entity()
+@Table(name = "sys_authority")
+@Data
+public class Authority extends BaseEntity implements GrantedAuthority {
+    private String name;
+    private String url;
+    private String method;
+    private String description;
+    private Long sort;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "authorities", cascade = CascadeType.PERSIST)
+    private Set<Role> roles = new HashSet<>(0);
+
+    @Override
+    public String getAuthority() {
+        return this.url + ";" + this.method;
+    }
+}
