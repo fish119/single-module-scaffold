@@ -1,0 +1,33 @@
+server:
+  port: 9999
+logging:
+  config: classpath:logback-spring.xml
+  level:
+#    root: WARN
+    org.springframework.web: WARN
+    org.springframework.security: WARN
+spring:
+  main:
+    banner-mode: 'off'
+  datasource:
+    url: jdbc:mysql://localhost:3306/single_module_scaffold?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: fish119
+    hikari:
+      #最小空闲连接数量
+      minimum-idle: 2
+      ## 空闲连接存活最大时间，默认600000（10分钟）
+      idle-timeout: 180000
+      ## 连接池最大连接数，默认是10
+      maximum-pool-size: 5
+      ## 池中连接的最长生命周期，值0表示无限生命周期，默认1800000即30分钟
+      max-lifetime: 600000
+      ## 数据库连接超时时间,默认30秒，即30000
+      connection-timeout: 10000
+      connection-test-query: SELECT 1
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: false
