@@ -12,13 +12,15 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
+import site.fish.security.Constant;
 import site.fish.security.JwtTokenUtil;
+import site.fish.service.AuthService;
 import site.fish.vo.auth.LoginVo;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.HashMap;
 
@@ -40,6 +42,8 @@ public class AuthController {
     private AuthenticationManager authenticationManager;
     @Autowired
     private JwtTokenUtil tokenUtil;
+    @Autowired
+    private AuthService authService;
 
     /**
      * Description: 用户名、密码：admin，前端传入md5后的密码，数据库中密码：
@@ -65,5 +69,14 @@ public class AuthController {
             logger.error(ex.getMessage());
             throw new BadCredentialsException("用户名或密码错误");
         }
+    }
+
+    @ApiOperation("2.刷新Token")
+    @GetMapping("/api/refreshToken")
+    public ResponseEntity<HashMap<String, String>> refreshToken(HttpServletRequest request){
+        String authHeader = request.getHeader(Constant.TOKEN_HEADER);
+        HashMap<String, String> map = new HashMap<>(2);
+        map.put("token",authService.refreshToken(authHeader));
+        return ResponseEntity.ok(map);
     }
 }

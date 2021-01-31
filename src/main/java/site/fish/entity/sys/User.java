@@ -9,6 +9,7 @@ import site.fish.entity.BaseEntity;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,6 +34,10 @@ public class User extends BaseEntity implements UserDetails {
     @Column(nullable = false, length = 68)
     private String password;
 
+    /**
+     * 最后修改密码时间
+     */
+    private Date lastPasswordReset;
 
     /**
      * 账户是否未过期

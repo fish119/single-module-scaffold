@@ -52,7 +52,7 @@ public class JwtTokenUtil implements Serializable {
             logger.error(err.getLocalizedMessage());
             claims = null;
         }
-        return claims;
+         return claims;
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {

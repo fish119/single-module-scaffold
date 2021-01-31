@@ -62,20 +62,21 @@ CREATE TABLE `sys_role`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE `sys_user`  (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `created_by` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
-  `created_date` datetime(6) NULL DEFAULT NULL,
-  `updated_by` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
-  `updated_date` datetime(6) NULL DEFAULT NULL,
-  `is_account_non_expired` tinyint(1) NULL DEFAULT 1,
-  `is_account_non_locked` tinyint(1) NULL DEFAULT 1,
-  `is_credentials_non_expired` tinyint(1) NULL DEFAULT 1,
-  `is_enabled` tinyint(1) NULL DEFAULT 1,
-  `password` varchar(68) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  `username` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `UK_51bvuyvihefoh4kp5syh2jpi4`(`username`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
+   `id` bigint NOT NULL AUTO_INCREMENT,
+    `password` varchar(68) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+    `username` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+    `is_account_non_expired` tinyint(1) NULL DEFAULT 1,
+    `is_account_non_locked` tinyint(1) NULL DEFAULT 1,
+    `is_credentials_non_expired` tinyint(1) NULL DEFAULT 1,
+    `is_enabled` tinyint(1) NULL DEFAULT 1,
+    `last_password_reset` datetime(6) NULL DEFAULT NULL,
+    `updated_by` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
+    `created_date` datetime(6) NULL DEFAULT NULL,
+    `created_by` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
+    `updated_date` datetime(6) NULL DEFAULT NULL,
+    PRIMARY KEY (`id`) USING BTREE,
+    UNIQUE INDEX `UK_51bvuyvihefoh4kp5syh2jpi4`(`username`) USING BTREE
+  ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for sys_role_authorities

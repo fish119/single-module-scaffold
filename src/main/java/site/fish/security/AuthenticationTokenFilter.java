@@ -49,7 +49,7 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
             } catch (ExpiredJwtException | CredentialsExpiredException e) {
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token Expired 认证超时，请重新登录。");
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token Expired 认证过期，请重新登录。");
             } catch (BadCredentialsException ex) {
                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Bad credentials，认证失败");
             } catch (Exception e) {
