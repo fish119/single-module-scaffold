@@ -1,5 +1,7 @@
-package site.fish.service;
+package site.fish.service.auth;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.CredentialsExpiredException;
@@ -20,6 +22,7 @@ import site.fish.security.JwtTokenUtil;
  */
 @Service
 public class AuthService {
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private JwtTokenUtil tokenUtil;
     @Autowired
@@ -27,6 +30,7 @@ public class AuthService {
 
     public String refreshToken(String authHeader) {
         if (ObjectUtils.isEmpty(authHeader)) {
+            logger.error("401: 未登录用户请求刷新Token ||| Url=/api/refreshToken");
             throw new BadCredentialsException("认证失败，请登录后重试");
         }
         final String oldToken = authHeader.substring(Constant.TOKEN_PREFIX.length());
@@ -35,6 +39,7 @@ public class AuthService {
         if (tokenUtil.canTokenBeRefreshed(oldToken, userRepository.findByUsername(username).getLastPasswordReset())) {
             return newToken;
         } else {
+            logger.error("403: 认证过期，Token无法刷新 ||| Url=/api/refreshToken");
             throw new CredentialsExpiredException("认证过期，Token无法刷新，请重新登录");
         }
     }

@@ -10,6 +10,7 @@ import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import site.fish.config.ExceptionMessage;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -36,7 +37,7 @@ public class JwtTokenUtil implements Serializable {
             return claims.getSubject();
         } catch (Exception e) {
             if (e instanceof ExpiredJwtException) {
-                throw new CredentialsExpiredException("认证超时，请重新登录");
+                throw new CredentialsExpiredException(ExceptionMessage.CREDENTIALS_EXPIRED);
             }
             return null;
         }
@@ -89,7 +90,7 @@ public class JwtTokenUtil implements Serializable {
     }
 
     public String generateToken(UserDetails userDetails) {
-        Map<String, Object> claims = new HashMap<>();
+        Map<String, Object> claims = new HashMap<>(2);
         claims.put(Constant.CLAIM_KEY_USERNAME, userDetails.getUsername());
         claims.put(Constant.CLAIM_KEY_CREATED, new Date());
         return generateToken(claims);

@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import site.fish.config.ExceptionMessage;
 import site.fish.entity.sys.User;
 import site.fish.repository.sys.UserRepository;
 
@@ -32,7 +33,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(s);
         if (user == null) {
-            logger.error(String.format("用户不存在：%s.", s));
+            logger.error(ExceptionMessage.USERNAME_NOT_FOUND + "：" + s);
             /*
              SpringSecurity默认的DaoAuthenticationProvider中，hideUserNotFoundExceptions=false
              如抛出UsernameNotFoundException，则错误信息将被隐藏，因此无需携带特定异常信息

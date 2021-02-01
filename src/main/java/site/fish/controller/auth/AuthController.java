@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -12,12 +13,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import site.fish.security.Constant;
 import site.fish.security.JwtTokenUtil;
-import site.fish.service.AuthService;
+import site.fish.service.auth.AuthService;
 import site.fish.vo.auth.LoginVo;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,35 +47,31 @@ public class AuthController {
     /**
      * Description: 用户名、密码：admin，前端传入md5后的密码，数据库中密码：
      * {bcrypt}$2a$10$Gm1noaQlGdiWoSIu8eI1Cea4iVeKC10OmdDtu9.d.lAZxUE9Yv0Ta
-     * @author    : Morphling
-     * @date      : 2021/1/27 21:08
+     *
      * @param loginVo : loginVo
-     * @return    : org.springframework.http.ResponseEntity<?>
+     * @return : org.springframework.http.ResponseEntity<?>
+     * @author : Morphling
+     * @date : 2021/1/27 21:08
      */
     @ApiOperation("1.登录")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<HashMap<String, String>> login(@RequestBody @Valid LoginVo loginVo) {
-        try {
-            UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken(loginVo.getUsername(), loginVo.getPassword());
-            final Authentication authentication = authenticationManager.authenticate(upToken);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            final UserDetails userDetails =  (UserDetails) authentication.getPrincipal();
-            String token = tokenUtil.generateToken(userDetails);
-            HashMap<String, String> map = new HashMap<>(2);
-            map.put("token", token);
-            return ResponseEntity.ok(map);
-        } catch (IllegalArgumentException ex) {
-            logger.error(ex.getMessage());
-            throw new BadCredentialsException("用户名或密码错误");
-        }
+        HashMap<String, String> map = new HashMap<>(2);
+        UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken(loginVo.getUsername(), loginVo.getPassword());
+        final Authentication authentication = authenticationManager.authenticate(upToken);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        final UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String token = tokenUtil.generateToken(userDetails);
+        map.put("token", token);
+        return ResponseEntity.ok(map);
     }
 
     @ApiOperation("2.刷新Token")
     @GetMapping("/api/refreshToken")
-    public ResponseEntity<HashMap<String, String>> refreshToken(HttpServletRequest request){
+    public ResponseEntity<HashMap<String, String>> refreshToken(HttpServletRequest request) {
         String authHeader = request.getHeader(Constant.TOKEN_HEADER);
         HashMap<String, String> map = new HashMap<>(2);
-        map.put("token",authService.refreshToken(authHeader));
+        map.put("token", authService.refreshToken(authHeader));
         return ResponseEntity.ok(map);
     }
 }

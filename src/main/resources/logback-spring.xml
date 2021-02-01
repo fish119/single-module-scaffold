@@ -10,6 +10,13 @@
                 <password>fish119</password>
             </dataSource>
         </connectionSource>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+    </appender>
+    <appender name="asyncDb" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="db" />
+        <includeCallerData>true</includeCallerData>
     </appender>
 
     <!-- 日志记录器，日期滚动记录 -->
@@ -59,7 +66,7 @@
         </filter>
     </appender>
     <root level="INFO">
-<!--        <appender-ref ref="db"/>-->
+        <appender-ref ref="asyncDb"/>
         <appender-ref ref="fileWarn"/>
         <appender-ref ref="fileError"/>
     </root>

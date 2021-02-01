@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import site.fish.config.ExceptionMessage;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -49,11 +50,11 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
             } catch (ExpiredJwtException | CredentialsExpiredException e) {
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token Expired 认证过期，请重新登录。");
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ExceptionMessage.CREDENTIALS_EXPIRED);
             } catch (BadCredentialsException ex) {
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Bad credentials，认证失败");
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ExceptionMessage.BAD_CREDENTIALS);
             } catch (Exception e) {
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Other Exception，认证失败");
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ExceptionMessage.BAD_CREDENTIALS + "：Other Exception");
             }
         }
         filterChain.doFilter(request, response);

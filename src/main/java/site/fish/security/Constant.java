@@ -16,4 +16,5 @@ public class Constant {
     public static final String CLAIM_KEY_USERNAME = "sub";
     public static final String CLAIM_KEY_CREATED = "created";
     public static final long EXPIRATION = 30*24*60*60*1000L;
+    public static final String API_URL_PREFIX = "/api/";
 }

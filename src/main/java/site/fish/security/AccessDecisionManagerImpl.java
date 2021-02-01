@@ -1,7 +1,6 @@
 package site.fish.security;
 
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
@@ -13,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
+import site.fish.config.ExceptionMessage;
 import site.fish.entity.sys.Authority;
 import site.fish.entity.sys.User;
 
@@ -29,15 +29,17 @@ import java.util.Collection;
  */
 @Component
 public class AccessDecisionManagerImpl implements AccessDecisionManager {
-    @Autowired
-    private AuthorityCache authorityCache;
 
     private final org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
-     * 如需指定某路径无需认证：
+     * 指定某路径无需认证：
      * if (!url.contains("/api/")) {
-     * return;
+     *      return;
+     * }
+     * 从Catch中获取可设置为：
+     * if(authorityCache.getPermitAllUrls().stream().anyMatch(url::equals)){
+     *      return;
      * }
      */
     @Override
@@ -48,12 +50,9 @@ public class AccessDecisionManagerImpl implements AccessDecisionManager {
         if (configAttributes == null) {
             return;
         }
-        if (!url.contains("/api/")) {
+        if (!url.contains(Constant.API_URL_PREFIX)) {
             return;
         }
-//        if(authorityCache.getPermitAllUrls().stream().anyMatch(url::equals)){
-//            return;
-//        }
         if (HttpMethod.OPTIONS.matches(method)) {
             return;
         }
@@ -69,7 +68,7 @@ public class AccessDecisionManagerImpl implements AccessDecisionManager {
             }
         }
         logger.error("403:Forbidden" + "|||Url=" + url + "|||UserId=" + getUserId());
-        throw new AccessDeniedException("没有访问权限，请联系管理员");
+        throw new AccessDeniedException(ExceptionMessage.FORBIDDEN);
     }
 
     @Override

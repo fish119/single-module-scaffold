@@ -16,9 +16,11 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import site.fish.config.ExceptionMessage;
 
 import javax.servlet.Filter;
 import javax.servlet.http.HttpServletResponse;
@@ -97,9 +99,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationEntryPoint unauthorizedEntryPoint() {
         return (request, response, authException) -> {
             logger.error("401:" + authException.getMessage() + "|||Url=" + request.getRequestURI());
+            String msg = ObjectUtils.isEmpty(authException.getLocalizedMessage()) ? ExceptionMessage.BAD_CREDENTIALS : authException.getLocalizedMessage();
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
                     "Full authentication is required to access this resource".equals(authException.getLocalizedMessage()) ?
-                            "认证失败，请登录后重试" : authException.getLocalizedMessage());
+                            ExceptionMessage.BAD_CREDENTIALS : msg);
         };
     }
 
@@ -112,7 +115,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AccessDeniedHandler accessDeniedHandler() {
         return (request, response, accessDeniedException) -> {
             logger.error("403:" + accessDeniedException.getLocalizedMessage() + "|||Url=" + request.getRequestURI());
-            response.sendError(HttpServletResponse.SC_FORBIDDEN, accessDeniedException.getLocalizedMessage());
+            String msg = ObjectUtils.isEmpty(accessDeniedException.getLocalizedMessage()) ? ExceptionMessage.FORBIDDEN : accessDeniedException.getLocalizedMessage();
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, msg);
         };
     }
 

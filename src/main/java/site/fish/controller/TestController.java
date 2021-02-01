@@ -2,9 +2,12 @@ package site.fish.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
 
 /**
  * Description: [TestController]
@@ -22,6 +25,13 @@ public class TestController {
     @GetMapping("/test/hello")
     public ResponseEntity<String> hello() {
         return ResponseEntity.ok("Hello");
+    }
+
+    @GetMapping("/test/testError")
+    public ResponseEntity<?> testError(){
+        HashMap<String, String> map = null;
+        map.put("message","用户名或密码错误了啊");
+        return new ResponseEntity<>(map, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ApiOperation("2.user测试")

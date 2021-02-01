@@ -17,7 +17,7 @@ import java.util.Date;
 @Entity()
 @Table(name = "logging_event")
 @Data
-public class Logging_event {
+public class LoggingEvent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "event_id")
@@ -47,9 +47,4 @@ public class Logging_event {
     private String callerLine;
     @Transient
     private Date dateTime;
-
-    public Date getDateTime() {
-        dateTime = new Date(this.timestmp);
-        return dateTime;
-    }
 }
