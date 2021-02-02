@@ -47,6 +47,8 @@ public class BaseEntity implements Serializable {
     @Column(name = "updated_by", length = 20)
     private String updatedBy;
 
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

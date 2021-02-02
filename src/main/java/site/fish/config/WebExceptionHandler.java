@@ -24,9 +24,9 @@ import java.io.IOException;
 public class WebExceptionHandler extends ResponseEntityExceptionHandler {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @ExceptionHandler(Exception.class)
-    public void unKnowExceptionHandler(Exception ex, HttpServletResponse response, HttpServletRequest request) throws IOException {
-        logger.error("500:" + ex.getClass().getName() + ex.getLocalizedMessage() + ex.getMessage() + "|||Url=" + request.getRequestURI());
-        response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), "服务器异常");
-    }
+//    @ExceptionHandler(Exception.class)
+//    public void unKnowExceptionHandler(Exception ex, HttpServletResponse response, HttpServletRequest request) throws IOException {
+//        logger.error("500:" + ex.getClass().getName() + ex.getLocalizedMessage() + ex.getMessage() + "|||Url=" + request.getRequestURI());
+//        response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), "服务器异常");
+//    }
 }

@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
 
 /**
  * Description: [LoginVo]
@@ -15,7 +16,7 @@ import javax.validation.constraints.NotEmpty;
  * @date : 2021/1/30 20:13
  */
 @Data
-public class LoginVo {
+public class LoginVo implements Serializable {
     @ApiModelProperty("用户名")
     @NotEmpty(message = "用户名不能为空")
     private String username;
