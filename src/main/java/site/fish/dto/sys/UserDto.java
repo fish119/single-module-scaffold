@@ -1,8 +1,11 @@
-package site.fish.vo.sys;
+package site.fish.dto.sys;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.mapstruct.Mapper;
+import site.fish.dto.mapper.BaseMapper;
+import site.fish.entity.sys.User;
 
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
@@ -19,7 +22,7 @@ import java.util.Date;
  */
 @ApiModel("用户对象")
 @Data
-public class UserVo implements Serializable {
+public class UserDto implements Serializable {
     private Long id;
     @ApiModelProperty("用户名")
     @NotEmpty(message = "用户名不能为空")

@@ -5,10 +5,8 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import site.fish.security.Constant;
 import site.fish.security.JwtTokenUtil;
 import site.fish.service.auth.AuthService;
-import site.fish.vo.auth.LoginVo;
+import site.fish.dto.auth.LoginDto;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -55,7 +53,7 @@ public class AuthController {
      */
     @ApiOperation("1.登录")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<HashMap<String, String>> login(@RequestBody @Valid LoginVo loginVo) {
+    public ResponseEntity<HashMap<String, String>> login(@RequestBody @Valid LoginDto loginVo) {
         HashMap<String, String> map = new HashMap<>(2);
         UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken(loginVo.getUsername(), loginVo.getPassword());
         final Authentication authentication = authenticationManager.authenticate(upToken);
