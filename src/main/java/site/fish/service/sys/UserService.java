@@ -48,23 +48,36 @@ public class UserService {
     /**
      * Description: 增加新用户（仅设置默认角色：user）
      *
-     * @param userDto : userDto
+     * @param userVo : userVo
      * @return : site.fish.vo.sys.UserVo
      * @author : Morphling
      * @date : 2021/2/2 16:50
      */
     @Transactional(rollbackFor = Exception.class)
-    public UserVo addUser(UserVo userDto) {
-        User user = mapper.toEntity(userDto);
+    public UserVo addUser(UserVo userVo) {
+        User user = mapper.toEntity(userVo);
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        user.setPassword(encoder.encode(userDto.getPassword()));
+        user.setPassword(encoder.encode(userVo.getPassword()));
         if (ObjectUtils.isEmpty(user.getRoles())) {
             Set<Role> roleList = new LinkedHashSet<>();
             roleList.add(roleRepository.getOne(3L));
             user.setRoles(roleList);
         }
-        userDto = mapper.toVo(userRepository.saveAndFlush(user));
-        return userDto;
+        userVo = mapper.toVo(userRepository.saveAndFlush(user));
+        return userVo;
+    }
+
+    /**
+    * Description: 根据Id获得用户信息
+    * @author    : Morphling
+    * @date      : 2021/2/4 16:37
+    * @param id : 用户Id
+    * @return    : site.fish.vo.sys.UserVo
+    */
+    @Transactional(rollbackFor = Exception.class)
+    public UserVo getUserById(Long id){
+        User user = userRepository.getOne(id);
+        return(mapper.toVo(user));
     }
 
     /**

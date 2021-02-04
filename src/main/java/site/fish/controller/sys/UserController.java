@@ -72,4 +72,10 @@ public class UserController {
         userService.setUserEnable(id, true);
         return ResponseEntity.ok("用户恢复成功");
     }
+
+    @ApiOperation("06.根据Id获取用户信息")
+    @GetMapping("/{id}")
+    public ResponseEntity<UserVo> getUser(@PathVariable final Long id) {
+        return ResponseEntity.ok(userService.getUserById(id));
+    }
 }
