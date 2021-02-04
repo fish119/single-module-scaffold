@@ -12,4 +12,6 @@ package site.fish.config;
 public class Constant {
     public final static String DEFAULT_PASSWORD = "5f4dcc3b5aa765d61d8327deb882cf99";
     public final static String DEFAULT_PASSWORD_NO_ENCODE = "password";
+    public final static int PAGE_SIZE = 20;
+    public final static String SORT_COLUMN = "createdDate";
 }

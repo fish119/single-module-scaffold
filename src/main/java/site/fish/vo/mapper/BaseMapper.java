@@ -47,4 +47,5 @@ public interface BaseMapper<Vo, Entity> {
     * @return    : java.util.List<Entity>
     */
     List<Entity> toEntityList(List<Vo> voList);
+
 }

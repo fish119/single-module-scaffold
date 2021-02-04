@@ -1,6 +1,8 @@
 package site.fish.service.sys;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -68,16 +70,17 @@ public class UserService {
     }
 
     /**
-    * Description: 根据Id获得用户信息
-    * @author    : Morphling
-    * @date      : 2021/2/4 16:37
-    * @param id : 用户Id
-    * @return    : site.fish.vo.sys.UserVo
-    */
+     * Description: 根据Id获得用户信息
+     *
+     * @param id : 用户Id
+     * @return : site.fish.vo.sys.UserVo
+     * @author : Morphling
+     * @date : 2021/2/4 16:37
+     */
     @Transactional(rollbackFor = Exception.class)
-    public UserVo getUserById(Long id){
+    public UserVo getUserById(Long id) {
         User user = userRepository.getOne(id);
-        return(mapper.toVo(user));
+        return (mapper.toVo(user));
     }
 
     /**
@@ -117,18 +120,38 @@ public class UserService {
             throw new BadCredentialsException(ExceptionMessage.WRONG_PASSWORD);
         }
     }
+
     /**
-    * Description: 启用（恢复）/禁用（逻辑删除）用户
-    * @author    : Morphling
-    * @date      : 2021/2/4 13:53
-    * @param id : 用户id
-    * @param status : 状态：true=启用，false=禁用（删除）
-    */
+     * Description: 启用（恢复）/禁用（逻辑删除）用户
+     *
+     * @param id     : 用户id
+     * @param status : 状态：true=启用，false=禁用（删除）
+     * @author : Morphling
+     * @date : 2021/2/4 13:53
+     */
     @Transactional(rollbackFor = Exception.class)
-    public void setUserEnable(Long id,boolean status){
+    public void setUserEnable(Long id, boolean status) {
         User user = userRepository.getOne(id);
         user.setEnabled(status);
         userRepository.save(user);
+    }
+
+    /**
+     * Description: 分页查询用户
+     *
+     * @param pageable : pageable
+     * @param isEnable : 状态：true=启用，false=禁用（删除）
+     * @return : org.springframework.data.domain.Page<site.fish.vo.sys.UserVo>
+     * @author : Morphling
+     * @date : 2021/2/4 21:32
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public Page<UserVo> getUsers(Pageable pageable, Boolean isEnable) {
+        if (isEnable) {
+            return userRepository.findByIsEnabledIsTrue(pageable).map(mapper::toVo);
+        } else {
+            return userRepository.findByIsEnabledIsFalse(pageable).map(mapper::toVo);
+        }
     }
 }
 

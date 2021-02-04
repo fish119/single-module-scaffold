@@ -3,6 +3,10 @@ package site.fish.controller.sys;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -33,6 +37,15 @@ import javax.validation.Valid;
 public class UserController {
     @Autowired
     UserService userService;
+
+    @ApiOperation("00.获取用户列表（已分页）")
+    @GetMapping("")
+    public ResponseEntity<Page<UserVo>> findAllEnabled(
+            @PageableDefault(size = Constant.PAGE_SIZE,
+                    sort = {Constant.SORT_COLUMN},
+                    direction = Sort.Direction.DESC) Pageable pageable) {
+        return ResponseEntity.ok(userService.getUsers(pageable, true));
+    }
 
     @ApiOperation("01.增加用户")
     @PostMapping("")
@@ -77,5 +90,14 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserVo> getUser(@PathVariable final Long id) {
         return ResponseEntity.ok(userService.getUserById(id));
+    }
+
+    @ApiOperation("07.获取已删除用户列表（已分页）")
+    @GetMapping("/disabled")
+    public ResponseEntity<Page<UserVo>> findAllDisabled(
+            @PageableDefault(size = Constant.PAGE_SIZE,
+                    sort = {Constant.SORT_COLUMN},
+                    direction = Sort.Direction.DESC) Pageable pageable) {
+        return ResponseEntity.ok(userService.getUsers(pageable, false));
     }
 }

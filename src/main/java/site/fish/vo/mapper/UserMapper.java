@@ -3,8 +3,8 @@ package site.fish.vo.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
-import site.fish.vo.sys.UserVo;
 import site.fish.entity.sys.User;
+import site.fish.vo.sys.UserVo;
 
 /**
  * Description: [UserMapper]
