@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import site.fish.security.Constant;
 import site.fish.security.JwtTokenUtil;
 import site.fish.service.auth.AuthService;
-import site.fish.dto.auth.LoginDto;
+import site.fish.vo.auth.LoginVo;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -53,7 +53,7 @@ public class AuthController {
      */
     @ApiOperation("1.登录")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<HashMap<String, String>> login(@RequestBody @Valid LoginDto loginVo) {
+    public ResponseEntity<HashMap<String, String>> login(@RequestBody @Valid LoginVo loginVo) {
         HashMap<String, String> map = new HashMap<>(2);
         UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken(loginVo.getUsername(), loginVo.getPassword());
         final Authentication authentication = authenticationManager.authenticate(upToken);

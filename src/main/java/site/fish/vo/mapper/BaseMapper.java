@@ -1,12 +1,4 @@
-package site.fish.dto.mapper;
-
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
-import org.mapstruct.ReportingPolicy;
-import org.mapstruct.factory.Mappers;
-import site.fish.dto.sys.UserDto;
-import site.fish.entity.sys.User;
+package site.fish.vo.mapper;
 
 import java.util.List;
 
@@ -19,7 +11,7 @@ import java.util.List;
  * @version : 1.0
  * @date : 2021/2/3 15:45
  */
-public interface BaseMapper<Dto, Entity> {
+public interface BaseMapper<Vo, Entity> {
     /**
     * Description: 将Entity转换为Dto
     * @author    : Morphling
@@ -27,16 +19,16 @@ public interface BaseMapper<Dto, Entity> {
     * @param entity : entity
     * @return    : Dto
     */
-    Dto toDto(Entity entity);
+    Vo toVo(Entity entity);
 
     /**
     * Description: 将Dto转换为Entity
     * @author    : Morphling
     * @date      : 2021/2/3 16:43
-    * @param dto : dto
+    * @param vo : vo
     * @return    : Entity
     */
-    Entity toEntity(Dto dto);
+    Entity toEntity(Vo vo);
 
     /**
     * Description: 将Entity List转换为Dto List
@@ -45,14 +37,14 @@ public interface BaseMapper<Dto, Entity> {
     * @param entityList : entityList
     * @return    : java.util.List<Dto>
     */
-    List<Dto> toDtoList(List<Entity> entityList);
+    List<Vo> toVoList(List<Entity> entityList);
 
     /**
     * Description: 将Dto List转换为Entity List
     * @author    : Morphling
     * @date      : 2021/2/3 16:44
-    * @param dtoList : dtoList
+    * @param voList : voList
     * @return    : java.util.List<Entity>
     */
-    List<Entity> toEntityList(List<Dto> dtoList);
+    List<Entity> toEntityList(List<Vo> voList);
 }

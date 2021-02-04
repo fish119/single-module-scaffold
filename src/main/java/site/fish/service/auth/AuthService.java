@@ -7,6 +7,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import site.fish.config.ExceptionMessage;
 import site.fish.repository.sys.UserRepository;
 import site.fish.security.Constant;
 import site.fish.security.JwtTokenUtil;
@@ -30,8 +31,8 @@ public class AuthService {
 
     public String refreshToken(String authHeader) {
         if (ObjectUtils.isEmpty(authHeader)) {
-            logger.error("401: 未登录用户请求刷新Token ||| Url=/api/refreshToken");
-            throw new BadCredentialsException("认证失败，请登录后重试");
+            logger.error("401: "+ExceptionMessage.REFRESH_TOKEN_BY_GUEST+" ||| Url=/api/refreshToken");
+            throw new BadCredentialsException(ExceptionMessage.BAD_CREDENTIALS);
         }
         final String oldToken = authHeader.substring(Constant.TOKEN_PREFIX.length());
         String newToken = tokenUtil.refreshToken(oldToken);
@@ -39,8 +40,8 @@ public class AuthService {
         if (tokenUtil.canTokenBeRefreshed(oldToken, userRepository.findByUsername(username).getLastPasswordReset())) {
             return newToken;
         } else {
-            logger.error("403: 认证过期，Token无法刷新 ||| Url=/api/refreshToken");
-            throw new CredentialsExpiredException("认证过期，Token无法刷新，请重新登录");
+            logger.error("403: " + ExceptionMessage.TOKEN_EXPIRED + " ||| Url=/api/refreshToken");
+            throw new CredentialsExpiredException(ExceptionMessage.TOKEN_EXPIRED);
         }
     }
 }

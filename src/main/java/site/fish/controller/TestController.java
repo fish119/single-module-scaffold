@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import site.fish.service.sys.UserService;
-import site.fish.dto.sys.UserDto;
+import site.fish.vo.sys.UserVo;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -57,7 +57,7 @@ public class TestController {
 
     @ApiOperation("4.注册测试")
     @PostMapping("/api/test/user")
-    public ResponseEntity<UserDto> addUserTest(@RequestBody @Valid UserDto user){
+    public ResponseEntity<UserVo> addUserTest(@RequestBody @Valid UserVo user){
         return ResponseEntity.ok(userService.addUser(user));
     }
 }

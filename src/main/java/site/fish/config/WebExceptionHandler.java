@@ -38,7 +38,7 @@ public class WebExceptionHandler {
     @ExceptionHandler(Exception.class)
     public void unKnowExceptionHandler(Exception ex, HttpServletResponse response, HttpServletRequest request) throws IOException {
         log.error("500:" + ex.getClass().getName() + ex.getLocalizedMessage() + ex.getMessage() + "|||Url=" + request.getRequestURI());
-        response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), "服务器异常");
+        response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), ExceptionMessage.SERVER_ERROR);
     }
 
     @ExceptionHandler({AuthenticationException.class, BadCredentialsException.class})
@@ -73,7 +73,7 @@ public class WebExceptionHandler {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         result.put("timestamp", formatter.format(LocalDateTime.now()));
         result.put("status", HttpServletResponse.SC_BAD_REQUEST);
-        result.put("message", "参数校验失败");
+        result.put("message", ExceptionMessage.ARGUMENT_NOT_VALID);
         result.put("errors", errors);
         result.put("path", request.getRequestURI());
         return result;

@@ -1,5 +1,6 @@
-package site.fish.dto.auth;
+package site.fish.vo.auth;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -16,7 +17,8 @@ import java.io.Serializable;
  * @date : 2021/1/30 20:13
  */
 @Data
-public class LoginDto implements Serializable {
+@ApiModel("登录表单对象")
+public class LoginVo implements Serializable {
     @ApiModelProperty("用户名")
     @NotEmpty(message = "用户名不能为空")
     private String username;

@@ -1,9 +1,9 @@
-package site.fish.dto.mapper;
+package site.fish.vo.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
-import site.fish.dto.sys.UserDto;
+import site.fish.vo.sys.UserVo;
 import site.fish.entity.sys.User;
 
 /**
@@ -16,7 +16,7 @@ import site.fish.entity.sys.User;
  * @date : 2021/2/3 16:39
  */
 @Mapper(componentModel = "spring")
-public interface UserMapper extends BaseMapper<UserDto, User> {
+public interface UserMapper extends BaseMapper<UserVo, User> {
     /**
     * Description: 将Dto转换为Entity ，忽略Password字段
     * @author    : Morphling
@@ -26,5 +26,5 @@ public interface UserMapper extends BaseMapper<UserDto, User> {
     */
     @Override
     @Mappings({@Mapping(target = "password", ignore = true)})
-    UserDto toDto(User entity);
+    UserVo toVo(User entity);
 }
