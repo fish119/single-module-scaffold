@@ -24,4 +24,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     * @return    : site.fish119.sss.po.sys.User
     */
     User findByUsername(@Param("username") final String username);
+
+//    User findByUsernameAndIsDeletedIsFalse(@Param("username") final String username);
 }

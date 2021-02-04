@@ -13,12 +13,11 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import site.fish.vo.ApiError;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,21 +60,17 @@ public class WebExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(BindException.class)
     @ResponseBody
-    public Map<String, Object> handleValidationExceptions(BindException ex, HttpServletRequest request, HttpServletResponse response) {
+    public ApiError handleValidationExceptions(BindException ex, HttpServletRequest request, HttpServletResponse response) {
         log.error("400:" + ex.getLocalizedMessage() + "|||Url=" + request.getRequestURI());
-        Map<String, Object> result = new HashMap<>(6);
+        ApiError exception = new ApiError(HttpServletResponse.SC_BAD_REQUEST, ExceptionMessage.ARGUMENT_NOT_VALID);
         Map<String, String> errors = new HashMap<>(2);
         ex.getBindingResult().getAllErrors().forEach((error) -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
         });
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        result.put("timestamp", formatter.format(LocalDateTime.now()));
-        result.put("status", HttpServletResponse.SC_BAD_REQUEST);
-        result.put("message", ExceptionMessage.ARGUMENT_NOT_VALID);
-        result.put("errors", errors);
-        result.put("path", request.getRequestURI());
-        return result;
+        exception.setErrors(errors);
+        exception.setPath(request.getRequestURI());
+        return exception;
     }
 }

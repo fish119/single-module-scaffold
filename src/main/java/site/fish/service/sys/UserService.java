@@ -98,10 +98,24 @@ public class UserService {
             UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken(user.getUsername(), vo.getOldPassword());
             authenticationManager.authenticate(upToken);
             user.setPassword(encoder.encode(vo.getNewPassword()));
+            user.setLastPasswordReset(new Date());
             userRepository.save(user);
         } catch (AuthenticationException ex) {
             throw new BadCredentialsException(ExceptionMessage.WRONG_PASSWORD);
         }
+    }
+    /**
+    * Description: 启用（恢复）/禁用（逻辑删除）用户
+    * @author    : Morphling
+    * @date      : 2021/2/4 13:53
+    * @param id : 用户id
+    * @param status : 状态：true=启用，false=禁用（删除）
+    */
+    @Transactional(rollbackFor = Exception.class)
+    public void setUserEnable(Long id,boolean status){
+        User user = userRepository.getOne(id);
+        user.setEnabled(status);
+        userRepository.save(user);
     }
 }
 

@@ -40,14 +40,14 @@ public class UserController {
         return ResponseEntity.ok(userService.addUser(user));
     }
 
-    @ApiOperation("2.重置指定用户的密码（默认密码：password）")
+    @ApiOperation("02.重置指定用户的密码（默认密码：password）")
     @PutMapping("/{id}/password")
     public ResponseEntity<String> resetUserPassword(@PathVariable final Long id) {
         userService.changeUserPassword(id, Constant.DEFAULT_PASSWORD);
         return ResponseEntity.ok("密码重置成功，默认密码为：" + Constant.DEFAULT_PASSWORD_NO_ENCODE + " ，请尽快通知用户修改密码。");
     }
 
-    @ApiOperation("3.修改当前用户的密码")
+    @ApiOperation("03.修改当前用户的密码")
     @PostMapping("/changePersonPassword")
     public ResponseEntity<?> changePersonPassword(@RequestBody @Valid ChangePersonPasswordVo vo) {
         if (vo.getNewPassword().equals(vo.getConfirmNewPassword())) {
@@ -57,5 +57,19 @@ public class UserController {
         } else {
             return new ResponseEntity<>(new ApiError(HttpServletResponse.SC_BAD_REQUEST, "两次输入的密码不一致"), HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @ApiOperation("04.逻辑删除指定用户（设为禁用）")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> disableUser(@PathVariable final Long id) {
+        userService.setUserEnable(id, false);
+        return ResponseEntity.ok("用户删除成功");
+    }
+
+    @ApiOperation("05.恢复/启用指定用户")
+    @PostMapping("/{id}/enable")
+    public ResponseEntity<?> enableUser(@PathVariable final Long id) {
+        userService.setUserEnable(id, true);
+        return ResponseEntity.ok("用户恢复成功");
     }
 }
