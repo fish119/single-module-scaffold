@@ -17,14 +17,19 @@ import site.fish.entity.sys.Role;
 import site.fish.entity.sys.User;
 import site.fish.repository.sys.RoleRepository;
 import site.fish.repository.sys.UserRepository;
+import site.fish.vo.mapper.RoleMapper;
 import site.fish.vo.mapper.UserMapper;
 import site.fish.vo.sys.ChangePersonPasswordVo;
+import site.fish.vo.sys.IRoleVo;
+import site.fish.vo.sys.RoleVo;
 import site.fish.vo.sys.UserVo;
 
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Description: [UserService]
@@ -45,6 +50,8 @@ public class UserService {
     private AuthenticationManager authenticationManager;
     @Autowired
     UserMapper mapper;
+    @Autowired
+    RoleMapper roleMapper;
 
     private final PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
@@ -169,6 +176,11 @@ public class UserService {
         if (!ObjectUtils.isEmpty(roleIdList)) {
             roleIdList.forEach(roleId -> userRepository.insertIgnoreUserRoles(id, roleId));
         }
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public List<IRoleVo> getRoles(Long id){
+        return userRepository.getUserRoles(id);
     }
 }
 
