@@ -1,8 +1,11 @@
 package site.fish.service.sys;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import site.fish.entity.sys.Role;
 import site.fish.repository.sys.RoleRepository;
+import site.fish.service.BaseService;
+import site.fish.vo.mapper.RoleMapper;
+import site.fish.vo.sys.RoleVo;
 
 /**
  * Description: [RoleService]
@@ -14,8 +17,6 @@ import site.fish.repository.sys.RoleRepository;
  * @date : 2021/2/5 13:21
  */
 @Service
-public class RoleService {
-    @Autowired
-    private RoleRepository roleRepository;
+public class RoleService extends BaseService<Role, RoleRepository, RoleVo, RoleMapper> {
 
 }

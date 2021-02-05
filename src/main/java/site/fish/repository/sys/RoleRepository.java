@@ -1,9 +1,9 @@
 package site.fish.repository.sys;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import site.fish.entity.sys.Role;
+import site.fish.repository.BaseRepository;
 
 /**
  * Description: [Role Repository]
@@ -15,13 +15,14 @@ import site.fish.entity.sys.Role;
  * @date : 2021/1/30 18:35
  */
 @Repository
-public interface RoleRepository extends JpaRepository<Role,Long> {
+public interface RoleRepository extends BaseRepository<Role> {
     /**
-    * Description: findByName
-    * @author    : Morphling
-    * @date      : 2021/1/29 10:54
-    * @param name : name
-    * @return    : site.fish119.sss.po.sys.Role
-    */
+     * Description: findByName
+     *
+     * @param name : name
+     * @return : site.fish119.sss.po.sys.Role
+     * @author : Morphling
+     * @date : 2021/1/29 10:54
+     */
     Role findByName(@Param("name") final String name);
 }

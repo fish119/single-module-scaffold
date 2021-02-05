@@ -43,7 +43,7 @@ import java.util.stream.Stream;
 @Api(tags = "02.用户")
 public class UserController {
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @ApiOperation("00.获取用户列表（已分页）")
     @GetMapping("")

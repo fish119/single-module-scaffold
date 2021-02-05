@@ -50,8 +50,6 @@ public class UserService {
     private AuthenticationManager authenticationManager;
     @Autowired
     UserMapper mapper;
-    @Autowired
-    RoleMapper roleMapper;
 
     private final PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 

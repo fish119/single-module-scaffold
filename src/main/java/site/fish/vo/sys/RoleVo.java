@@ -1,8 +1,7 @@
 package site.fish.vo.sys;
 
 import lombok.Data;
-
-import java.io.Serializable;
+import site.fish.vo.BaseVo;
 
 /**
  * Description: [RoleVo]
@@ -14,7 +13,7 @@ import java.io.Serializable;
  * @date : 2021/2/5 13:14
  */
 @Data
-public class RoleVo implements Serializable {
+public class RoleVo implements BaseVo {
     private Long id;
     private String name;
     private Long sort;

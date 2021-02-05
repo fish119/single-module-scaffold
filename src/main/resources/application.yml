@@ -43,8 +43,8 @@ spring:
       ddl-auto: none
       show-sql: true
     open-in-view: false
-  flyway: # flyway 数据库 DDL 版本控制
-    ##    enabled: true # 正式环境才开启
+  flyway:
+    enabled: false # 正式环境才开启:设置为true
     clean-disabled: true # 禁用数据库清理
     schemas: single_module_scaffold
     #    encoding: UTF-8

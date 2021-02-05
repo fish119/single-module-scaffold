@@ -26,6 +26,11 @@ public class Role extends BaseEntity {
     @Column(nullable = false, unique = true)
     private String name;
     private Long sort;
+    /**
+     * 账户是否激活
+     */
+    @Column(columnDefinition = "bool default true")
+    private boolean isEnabled = true;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "roles",cascade = CascadeType.PERSIST)
