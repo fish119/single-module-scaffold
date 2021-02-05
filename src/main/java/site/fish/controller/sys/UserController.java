@@ -21,6 +21,8 @@ import site.fish.vo.sys.UserVo;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 /**
  * Description: [UserController]
@@ -99,5 +101,12 @@ public class UserController {
                     sort = {Constant.SORT_COLUMN},
                     direction = Sort.Direction.DESC) Pageable pageable) {
         return ResponseEntity.ok(userService.getUsers(pageable, false));
+    }
+
+    @ApiOperation("08.设置指定用户的权限")
+    @PostMapping("/{id}/roles")
+    public ResponseEntity<String> setRoles(@PathVariable final Long id, @RequestBody(required = false) List<Long> roles) {
+        userService.setRoles(id, roles);
+        return ResponseEntity.ok("权限设置成功");
     }
 }

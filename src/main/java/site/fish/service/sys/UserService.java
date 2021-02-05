@@ -23,6 +23,7 @@ import site.fish.vo.sys.UserVo;
 
 import java.util.Date;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -151,6 +152,22 @@ public class UserService {
             return userRepository.findByIsEnabledIsTrue(pageable).map(mapper::toVo);
         } else {
             return userRepository.findByIsEnabledIsFalse(pageable).map(mapper::toVo);
+        }
+    }
+
+    /**
+     * Description: 设置用户权限
+     *
+     * @param id         : id
+     * @param roleIdList : roleIdList
+     * @author : Morphling
+     * @date : 2021/2/5 11:37
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void setRoles(Long id, List<Long> roleIdList) {
+        userRepository.deleteUserRoles(id);
+        if (!ObjectUtils.isEmpty(roleIdList)) {
+            roleIdList.forEach(roleId -> userRepository.insertIgnoreUserRoles(id, roleId));
         }
     }
 }
