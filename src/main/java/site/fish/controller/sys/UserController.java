@@ -51,7 +51,7 @@ public class UserController {
             @PageableDefault(size = Constant.PAGE_SIZE,
                     sort = {Constant.SORT_COLUMN},
                     direction = Sort.Direction.DESC) Pageable pageable) {
-        return ResponseEntity.ok(userService.getUsers(pageable, true));
+        return ResponseEntity.ok(userService.getPages(pageable, true));
     }
 
     @ApiOperation("01.增加用户")
@@ -96,7 +96,7 @@ public class UserController {
     @ApiOperation("06.根据Id获取用户信息")
     @GetMapping("/{id}")
     public ResponseEntity<UserVo> getUser(@PathVariable final Long id) {
-        return ResponseEntity.ok(userService.getUserById(id));
+        return ResponseEntity.ok(userService.getOneById(id));
     }
 
     @ApiOperation("07.获取已删除用户列表（已分页）")
@@ -105,7 +105,7 @@ public class UserController {
             @PageableDefault(size = Constant.PAGE_SIZE,
                     sort = {Constant.SORT_COLUMN},
                     direction = Sort.Direction.DESC) Pageable pageable) {
-        return ResponseEntity.ok(userService.getUsers(pageable, false));
+        return ResponseEntity.ok(userService.getPages(pageable, false));
     }
 
     @ApiOperation("08.设置指定用户的角色")
@@ -117,7 +117,7 @@ public class UserController {
 
     @ApiOperation("09.获得用户的角色（未分页）")
     @GetMapping("/{id}/roles")
-    public ResponseEntity<List<IRoleVo>> getRoles(@PathVariable final Long id){
+    public ResponseEntity<List<IRoleVo>> getRoles(@PathVariable final Long id) {
         return ResponseEntity.ok(userService.getRoles(id));
     }
 }

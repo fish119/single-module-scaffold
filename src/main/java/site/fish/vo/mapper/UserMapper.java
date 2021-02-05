@@ -18,12 +18,13 @@ import site.fish.vo.sys.UserVo;
 @Mapper(componentModel = "spring")
 public interface UserMapper extends BaseMapper<UserVo, User> {
     /**
-    * Description: 将Dto转换为Entity ，忽略Password字段
-    * @author    : Morphling
-    * @date      : 2021/2/3 16:44
-    * @param entity : entity
-    * @return    : site.fish.dto.sys.UserDto
-    */
+     * Description: 将Dto转换为Entity ，忽略Password字段
+     *
+     * @param entity : entity
+     * @return : site.fish.dto.sys.UserDto
+     * @author : Morphling
+     * @date : 2021/2/3 16:44
+     */
     @Override
     @Mappings({@Mapping(target = "password", ignore = true)})
     UserVo toVo(User entity);
