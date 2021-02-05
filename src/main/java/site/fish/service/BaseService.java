@@ -60,4 +60,19 @@ public abstract class BaseService<E extends BaseEntity, R extends BaseRepository
         E e = repository.getOne(id);
         return (mapper.toVo(e));
     }
+
+    /**
+     * Description: 启用（恢复）/禁用（逻辑删除）记录
+     *
+     * @param id     : id
+     * @param status : status
+     * @author : Morphling
+     * @date : 2021/2/5 22:05
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void setEnable(Long id, boolean status) {
+        E entity = repository.getOne(id);
+        entity.setEnabled(status);
+        repository.save(entity);
+    }
 }

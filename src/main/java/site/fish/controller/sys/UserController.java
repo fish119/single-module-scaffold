@@ -82,14 +82,14 @@ public class UserController {
     @ApiOperation("04.逻辑删除指定用户（设为禁用）")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> disableUser(@PathVariable final Long id) {
-        userService.setUserEnable(id, false);
+        userService.setEnable(id, false);
         return ResponseEntity.ok("用户删除成功");
     }
 
     @ApiOperation("05.恢复/启用指定用户")
     @PostMapping("/{id}/enable")
     public ResponseEntity<?> enableUser(@PathVariable final Long id) {
-        userService.setUserEnable(id, true);
+        userService.setEnable(id, true);
         return ResponseEntity.ok("用户恢复成功");
     }
 

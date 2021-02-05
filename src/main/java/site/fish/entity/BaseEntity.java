@@ -47,7 +47,11 @@ public class BaseEntity implements Serializable {
     @Column(name = "updated_by", length = 20)
     private String updatedBy;
 
-
+    /**
+     * 是否激活（false时为逻辑删除）
+     */
+    @Column(columnDefinition = "bool default true")
+    protected boolean isEnabled = true;
 
     @Override
     public boolean equals(Object o) {

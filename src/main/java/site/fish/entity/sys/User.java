@@ -54,11 +54,6 @@ public class User extends BaseEntity implements UserDetails {
      */
     @Column(columnDefinition = "bool default true")
     private boolean isCredentialsNonExpired = true;
-    /**
-     * 账户是否激活
-     */
-    @Column(columnDefinition = "bool default true")
-    private boolean isEnabled = true;
 
     @ManyToMany(targetEntity = Role.class, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(joinColumns = @JoinColumn(name = "USER_ID"),

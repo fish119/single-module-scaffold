@@ -108,21 +108,6 @@ public class UserService extends BaseService<User, UserRepository, UserVo, UserM
     }
 
     /**
-     * Description: 启用（恢复）/禁用（逻辑删除）用户
-     *
-     * @param id     : 用户id
-     * @param status : 状态：true=启用，false=禁用（删除）
-     * @author : Morphling
-     * @date : 2021/2/4 13:53
-     */
-    @Transactional(rollbackFor = Exception.class)
-    public void setUserEnable(Long id, boolean status) {
-        User user = repository.getOne(id);
-        user.setEnabled(status);
-        repository.save(user);
-    }
-
-    /**
      * Description: 设置用户角色
      *
      * @param id         : id
