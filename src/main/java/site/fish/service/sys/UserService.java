@@ -156,7 +156,7 @@ public class UserService {
     }
 
     /**
-     * Description: 设置用户权限
+     * Description: 设置用户角色
      *
      * @param id         : id
      * @param roleIdList : roleIdList

@@ -103,10 +103,10 @@ public class UserController {
         return ResponseEntity.ok(userService.getUsers(pageable, false));
     }
 
-    @ApiOperation("08.设置指定用户的权限")
+    @ApiOperation("08.设置指定用户的角色")
     @PostMapping("/{id}/roles")
     public ResponseEntity<String> setRoles(@PathVariable final Long id, @RequestBody(required = false) List<Long> roles) {
         userService.setRoles(id, roles);
-        return ResponseEntity.ok("权限设置成功");
+        return ResponseEntity.ok("角色设置成功");
     }
 }

@@ -48,7 +48,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Page<User> findByIsEnabledIsFalse(Pageable pageable);
 
     /**
-    * Description: 删除指定用户的权限
+    * Description: 删除指定用户的角色
     * @author    : Morphling
     * @date      : 2021/2/5 11:26
     * @param id : userId
@@ -58,7 +58,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     void deleteUserRoles(@Param("id") Long id);
 
     /**
-    * Description: 设置用户权限
+    * Description: 设置用户角色
     * @author    : Morphling
     * @date      : 2021/2/5 11:27
     * @param userId : userId
