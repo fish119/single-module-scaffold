@@ -11,9 +11,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import site.fish.config.Constant;
 import site.fish.service.sys.RoleService;
+import site.fish.vo.sys.IUserVo;
 import site.fish.vo.sys.RoleVo;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Description: [RoleController]
@@ -66,10 +68,16 @@ public class RoleController {
         return ResponseEntity.ok("角色恢复成功");
     }
 
-    @ApiOperation("05.根据Id获取用户信息")
+    @ApiOperation("05.根据Id获取角色信息")
     @GetMapping("/{id}")
     public ResponseEntity<RoleVo> getRole(@PathVariable final Long id) {
         return ResponseEntity.ok(roleService.getOneById(id));
+    }
+
+    @ApiOperation("06.获得角色的用户（未分页）")
+    @GetMapping("/{id}/users")
+    public ResponseEntity<List<IUserVo>> getUsers(@PathVariable final Long id) {
+        return ResponseEntity.ok(roleService.getUsers(id));
     }
 
 }

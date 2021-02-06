@@ -6,7 +6,10 @@ import site.fish.entity.sys.Role;
 import site.fish.repository.sys.RoleRepository;
 import site.fish.service.BaseService;
 import site.fish.vo.mapper.RoleMapper;
+import site.fish.vo.sys.IUserVo;
 import site.fish.vo.sys.RoleVo;
+
+import java.util.List;
 
 /**
  * Description: [RoleService]
@@ -34,5 +37,18 @@ public class RoleService extends BaseService<Role, RoleRepository, RoleVo, RoleM
             role.setId(id);
         }
         return mapper.toVo(repository.save(role));
+    }
+
+
+    /**
+     * Description: 获得指定用户的角色列表（未分页）
+     * @author    : Morphling
+     * @date      : 2021/2/5 21:49
+     * @param id : id
+     * @return    : java.util.List<site.fish.vo.sys.IRoleVo>
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public List<IUserVo> getUsers(Long id) {
+        return repository.getRoleUsers(id);
     }
 }
