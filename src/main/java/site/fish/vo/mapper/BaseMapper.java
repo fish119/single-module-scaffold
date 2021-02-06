@@ -4,6 +4,7 @@ import site.fish.entity.BaseEntity;
 import site.fish.vo.BaseVo;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Description: [UserMapper]
@@ -45,6 +46,8 @@ public interface BaseMapper<Vo extends BaseVo, Entity extends BaseEntity> {
      */
     List<Vo> toVoList(List<Entity> entityList);
 
+    Set<Vo> toVoSet(Set<Entity> entityList);
+
     /**
      * Description: 将Dto List转换为Entity List
      *
@@ -54,4 +57,6 @@ public interface BaseMapper<Vo extends BaseVo, Entity extends BaseEntity> {
      * @date : 2021/2/3 16:44
      */
     List<Entity> toEntityList(List<Vo> voList);
+
+    Set<Entity> toEntityVo(List<Vo> voList);
 }

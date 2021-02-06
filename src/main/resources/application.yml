@@ -12,6 +12,7 @@ logging:
     root: INFO
     org.springframework.web: WARN
     org.springframework.security: WARN
+#    org.hibernate.SQL: DEBUG
 spring:
   http:
     encoding:
@@ -38,10 +39,12 @@ spring:
       connection-timeout: 10000
       connection-test-query: SELECT 1
   jpa:
+    show-sql: true
     hibernate:
       ##如使用Flyway管理数据库，则设置为none，否则可以设置为update
       ddl-auto: none
       show-sql: true
+      format_sql: true
     open-in-view: false
   flyway:
     enabled: false # 正式环境才开启:设置为true

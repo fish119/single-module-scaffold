@@ -6,9 +6,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import site.fish.entity.sys.User;
 import site.fish.repository.BaseRepository;
-import site.fish.vo.sys.IRoleVo;
-
-import java.util.List;
 
 /**
  * Description: [User Repository]
@@ -29,6 +26,7 @@ public interface UserRepository extends BaseRepository<User> {
      * @author : Morphling
      * @date : 2021/1/27 17:03
      */
+    @Query("from User u join fetch u.roles r join fetch r.authorities where u.username=:username")
     User findByUsername(@Param("username") final String username);
 
     /**
@@ -55,13 +53,13 @@ public interface UserRepository extends BaseRepository<User> {
     void insertIgnoreUserRoles(@Param("userId") Long userId, @Param("roleId") Long roleId);
 
     /**
-     * Description: 获得指定用户的所有角色列表
+     * Description: 获得指定用户(包含其所有角色列表）
      *
      * @param userId : userId
      * @return : java.util.List<site.fish.vo.sys.IRoleVo>
      * @author : Morphling
      * @date : 2021/2/5 14:19
      */
-    @Query(value = "SELECT r.id ,r.name,r.sort FROM `sys_role` r , sys_user_roles ur where r.id = ur.role_id and ur.user_id = :userId order by r.sort", nativeQuery = true)
-    List<IRoleVo> getUserRoles(@Param("userId") Long userId);
+    @Query("from User u join fetch u.roles where u.id=:userId")
+    User getOneWithRole(@Param("userId") Long userId);
 }

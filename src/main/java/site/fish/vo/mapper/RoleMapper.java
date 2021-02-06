@@ -15,4 +15,5 @@ import site.fish.vo.sys.RoleVo;
  */
 @Mapper(componentModel = "spring")
 public interface RoleMapper extends BaseMapper<RoleVo, Role>{
+
 }

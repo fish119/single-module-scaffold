@@ -16,9 +16,10 @@ import site.fish.entity.sys.User;
 import site.fish.repository.sys.RoleRepository;
 import site.fish.repository.sys.UserRepository;
 import site.fish.service.BaseService;
+import site.fish.vo.mapper.RoleMapper;
 import site.fish.vo.mapper.UserMapper;
 import site.fish.vo.sys.ChangePersonPasswordVo;
-import site.fish.vo.sys.IRoleVo;
+import site.fish.vo.sys.RoleVo;
 import site.fish.vo.sys.UserVo;
 
 import java.util.Date;
@@ -41,6 +42,9 @@ public class UserService extends BaseService<User, UserRepository, UserVo, UserM
     private RoleRepository roleRepository;
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private RoleMapper roleMapper;
 
 
     private final PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
@@ -66,7 +70,6 @@ public class UserService extends BaseService<User, UserRepository, UserVo, UserM
         userVo = mapper.toVo(repository.saveAndFlush(user));
         return userVo;
     }
-
 
 
     /**
@@ -124,14 +127,15 @@ public class UserService extends BaseService<User, UserRepository, UserVo, UserM
     }
 
     /**
-    * Description: 获得指定用户的角色列表（未分页）
-    * @author    : Morphling
-    * @date      : 2021/2/5 21:49
-    * @param id : id
-    * @return    : java.util.List<site.fish.vo.sys.IRoleVo>
-    */
+     * Description: 获得指定用户的角色列表（未分页）
+     *
+     * @param id : id
+     * @return : java.util.List<site.fish.vo.sys.IRoleVo>
+     * @author : Morphling
+     * @date : 2021/2/5 21:49
+     */
     @Transactional(rollbackFor = Exception.class)
-    public List<IRoleVo> getRoles(Long id) {
-        return repository.getUserRoles(id);
+    public Set<RoleVo> getRoles(Long id) {
+        return roleMapper.toVoSet(repository.getOneWithRole(id).getRoles());
     }
 }

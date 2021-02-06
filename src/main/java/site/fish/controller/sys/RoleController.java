@@ -11,11 +11,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import site.fish.config.Constant;
 import site.fish.service.sys.RoleService;
-import site.fish.vo.sys.IUserVo;
 import site.fish.vo.sys.RoleVo;
+import site.fish.vo.sys.UserVo;
 
 import javax.validation.Valid;
-import java.util.List;
+import java.util.Set;
 
 /**
  * Description: [RoleController]
@@ -76,7 +76,7 @@ public class RoleController {
 
     @ApiOperation("06.获得角色的用户（未分页）")
     @GetMapping("/{id}/users")
-    public ResponseEntity<List<IUserVo>> getUsers(@PathVariable final Long id) {
+    public ResponseEntity<Set<UserVo>> getUsers(@PathVariable final Long id) {
         return ResponseEntity.ok(roleService.getUsers(id));
     }
 

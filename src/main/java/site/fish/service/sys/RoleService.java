@@ -1,15 +1,17 @@
 package site.fish.service.sys;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import site.fish.entity.sys.Role;
 import site.fish.repository.sys.RoleRepository;
 import site.fish.service.BaseService;
 import site.fish.vo.mapper.RoleMapper;
-import site.fish.vo.sys.IUserVo;
+import site.fish.vo.mapper.UserMapper;
 import site.fish.vo.sys.RoleVo;
+import site.fish.vo.sys.UserVo;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * Description: [RoleService]
@@ -22,6 +24,9 @@ import java.util.List;
  */
 @Service
 public class RoleService extends BaseService<Role, RoleRepository, RoleVo, RoleMapper> {
+    @Autowired
+    private UserMapper userMapper;
+
     /**
      * Description: 增加/编辑角色
      *
@@ -48,7 +53,7 @@ public class RoleService extends BaseService<Role, RoleRepository, RoleVo, RoleM
      * @return    : java.util.List<site.fish.vo.sys.IRoleVo>
      */
     @Transactional(rollbackFor = Exception.class)
-    public List<IUserVo> getUsers(Long id) {
-        return repository.getRoleUsers(id);
+    public Set<UserVo> getUsers(Long id) {
+        return userMapper.toVoSet(repository.getOneWithUsers(id).getUsers());
     }
 }

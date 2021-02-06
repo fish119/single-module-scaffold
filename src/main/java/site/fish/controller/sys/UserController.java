@@ -13,21 +13,17 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import site.fish.config.Constant;
-import site.fish.entity.sys.Role;
 import site.fish.entity.sys.User;
 import site.fish.service.sys.UserService;
 import site.fish.vo.ApiError;
 import site.fish.vo.sys.ChangePersonPasswordVo;
-import site.fish.vo.sys.IRoleVo;
 import site.fish.vo.sys.RoleVo;
 import site.fish.vo.sys.UserVo;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Stream;
 
 /**
  * Description: [UserController]
@@ -117,7 +113,7 @@ public class UserController {
 
     @ApiOperation("09.获得用户的角色（未分页）")
     @GetMapping("/{id}/roles")
-    public ResponseEntity<List<IRoleVo>> getRoles(@PathVariable final Long id) {
+    public ResponseEntity<Set<RoleVo>> getRoles(@PathVariable final Long id) {
         return ResponseEntity.ok(userService.getRoles(id));
     }
 }
