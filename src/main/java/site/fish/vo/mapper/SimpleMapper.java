@@ -1,0 +1,17 @@
+package site.fish.vo.mapper;
+
+import site.fish.entity.BaseEntity;
+import site.fish.vo.sys.SimpleVo;
+
+/**
+ * Description: [仅包含id、name和sort字段的简单Vo对象接口]
+ * Copyright  : Copyright (c) 2021
+ * Company    : 沈阳云创工业智能技术有限公司
+ *
+ * @author : Morphling
+ * @version : 1.0
+ * @date : 2021/2/7 19:44
+ */
+public interface SimpleMapper<T extends BaseEntity> extends BaseMapper<SimpleVo, T> {
+
+}

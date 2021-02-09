@@ -6,10 +6,7 @@ import lombok.EqualsAndHashCode;
 import org.springframework.security.core.GrantedAuthority;
 import site.fish.entity.BaseEntity;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,7 +19,7 @@ import java.util.Set;
  * @version : 1.0
  * @date : 2021/1/30 18:35
  */
-@EqualsAndHashCode(callSuper = true,exclude = {"roles"})
+@EqualsAndHashCode(callSuper = true, exclude = {"roles"})
 @Entity()
 @Table(name = "sys_authority")
 @Data
@@ -36,6 +33,14 @@ public class Authority extends BaseEntity implements GrantedAuthority {
     @JsonIgnore
     @ManyToMany(mappedBy = "authorities", cascade = CascadeType.PERSIST)
     private Set<Role> roles = new HashSet<>(0);
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "group_id")
+    private AuthorityGroup group;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "tag_id")
+    private AuthorityTag tag;
 
     @Override
     public String getAuthority() {

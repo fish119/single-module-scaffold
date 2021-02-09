@@ -36,6 +36,7 @@ public class TestController {
         return ResponseEntity.ok("Hello");
     }
 
+    @ApiOperation(value = "2.异常测试")
     @GetMapping("/test/testError")
     public ResponseEntity<?> testError(){
         HashMap<String, String> map = null;
@@ -43,19 +44,19 @@ public class TestController {
         return new ResponseEntity<>(map, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ApiOperation("2.user测试")
+    @ApiOperation("3.user测试")
     @GetMapping("/api/test")
     public ResponseEntity<String> userTest() {
         return ResponseEntity.ok("User Test");
     }
 
-    @ApiOperation("3.admin测试")
+    @ApiOperation("4.admin测试")
     @GetMapping("/api/adminTest")
     public ResponseEntity<String> adminTest() {
         return ResponseEntity.ok("Admin Test");
     }
 
-    @ApiOperation("4.注册测试")
+    @ApiOperation("5.注册测试")
     @PostMapping("/api/test/user")
     public ResponseEntity<UserVo> addUserTest(@RequestBody @Valid UserVo user){
         return ResponseEntity.ok(userService.addUser(user));

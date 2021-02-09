@@ -8,17 +8,17 @@ import site.fish.vo.BaseVo;
 import javax.validation.constraints.NotEmpty;
 
 /**
- * Description: [RoleVo]
+ * Description: [SimpleVo]
  * Copyright  : Copyright (c) 2021
  * Company    : 沈阳云创工业智能技术有限公司
  *
  * @author : Morphling
  * @version : 1.0
- * @date : 2021/2/5 13:14
+ * @date : 2021/2/7 19:43
  */
-@ApiModel("基本角色对象（仅包含id、name和sort）")
+@ApiModel("基本Vo对象（仅包含id、name和sort）")
 @Data
-public class RoleVo implements BaseVo {
+public class SimpleVo implements BaseVo {
     private Long id;
     @ApiModelProperty("名称")
     @NotEmpty(message = "名称不能为空")

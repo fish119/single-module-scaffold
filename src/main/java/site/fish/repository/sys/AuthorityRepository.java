@@ -1,6 +1,9 @@
 package site.fish.repository.sys;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import site.fish.entity.sys.Authority;
 
@@ -14,5 +17,8 @@ import site.fish.entity.sys.Authority;
  * @date : 2021/1/30 18:35
  */
 @Repository
-public interface AuthorityRepository extends JpaRepository<Authority,Long> {
+public interface AuthorityRepository extends JpaRepository<Authority, Long> {
+    @Modifying
+    @Query(value = "INSERT IGNORE INTO sys_role_authorities VALUES (2,:authorityId)", nativeQuery = true)
+    void insertIgnoreAdminAuthorities(@Param("authorityId") Long authorityId);
 }

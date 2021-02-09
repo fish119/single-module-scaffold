@@ -46,6 +46,14 @@ public interface BaseMapper<Vo extends BaseVo, Entity extends BaseEntity> {
      */
     List<Vo> toVoList(List<Entity> entityList);
 
+    /**
+     * Description: 将Entity Set转换为Dto Set
+     *
+     * @param entityList : entityList
+     * @return : java.util.Set<Vo>
+     * @author : Morphling
+     * @date : 2021/2/7 16:59
+     */
     Set<Vo> toVoSet(Set<Entity> entityList);
 
     /**
@@ -58,5 +66,13 @@ public interface BaseMapper<Vo extends BaseVo, Entity extends BaseEntity> {
      */
     List<Entity> toEntityList(List<Vo> voList);
 
+    /**
+     * Description: 将Dto Set转换为Entity Set
+     *
+     * @param voList : voList
+     * @return : java.util.Set<Vo>
+     * @author : Morphling
+     * @date : 2021/2/7 16:59
+     */
     Set<Entity> toEntityVo(List<Vo> voList);
 }

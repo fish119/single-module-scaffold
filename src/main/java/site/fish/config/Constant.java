@@ -14,4 +14,5 @@ public class Constant {
     public final static String DEFAULT_PASSWORD_NO_ENCODE = "password";
     public final static int PAGE_SIZE = 20;
     public final static String SORT_COLUMN = "createdDate";
+    public final static Long ADMIN_ROLE_ID = 2L;
 }
