@@ -63,5 +63,6 @@ springfox:
 # 自定义参数
 ## 是否根据swagger更新权限及权限组数据表
 create-authority-from-swagger: true
+override-authority-from-swagger: false
 ## 是否自动将更新的权限赋予admin角色
 auto-authorize-to-admin: true

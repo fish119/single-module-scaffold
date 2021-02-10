@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Description: [CustomApiBuilder ]
+ * Description: [CustomApiBuilder 根据配置在生成API时将数据同步至数据库的权限表中]
  * Copyright  : Copyright (c) 2021
  * Company    : 沈阳云创工业智能技术有限公司
  *
@@ -34,12 +34,28 @@ import java.util.Set;
 @Component
 @Order(SwaggerPluginSupport.OAS_PLUGIN_ORDER)
 public class CustomApiBuilder implements ApiListingBuilderPlugin {
+    public final static String AUTH_JOINER_STR = ";";
     public static List<String> authTags = new ArrayList<>();
     public static List<String> auths = new ArrayList<>();
+    /**
+     * 是否从Swagger生成权限数据
+     */
     @Value("${create-authority-from-swagger}")
     private boolean createFromSwagger;
+    /**
+     * 是否将权限赋予admin角色
+     */
     @Value("${auto-authorize-to-admin}")
     private boolean authorizeToAdmin;
+    /**
+     * 是否覆盖原有权限数据（清空原有，重新生成）
+     */
+    @Value("${override-authority-from-swagger}")
+    private boolean overrideAuthority;
+    /**
+     * 是否已情况原有权限数据
+     */
+    private boolean isAuthCleared = false;
 
     @Autowired
     private AuthorityTagRepository tagRepository;
@@ -49,8 +65,10 @@ public class CustomApiBuilder implements ApiListingBuilderPlugin {
     @PostConstruct
     public void init() {
         if (createFromSwagger) {
-            tagRepository.findAll().forEach(authTag -> CustomApiBuilder.authTags.add(authTag.getName()));
-            authorityRepository.findAll().forEach(authority -> CustomApiBuilder.auths.add(authority.getAuthority()));
+            if (!overrideAuthority) {
+                tagRepository.findAll().forEach(authTag -> CustomApiBuilder.authTags.add(authTag.getName()));
+                authorityRepository.findAll().forEach(authority -> CustomApiBuilder.auths.add(authority.getAuthority()));
+            }
         }
     }
 
@@ -58,16 +76,40 @@ public class CustomApiBuilder implements ApiListingBuilderPlugin {
     @Transactional(rollbackFor = Exception.class)
     public void apply(ApiListingContext apiListingContext) {
         if (createFromSwagger) {
+            if (overrideAuthority && !isAuthCleared) {
+                clearAuthData();
+            }
             Set<Tag> tags = apiListingContext.apiListingBuilder().build().getTags();
-            saveTags(tags);
             List<ApiDescription> apis = apiListingContext.apiListingBuilder().build().getApis();
+
+            saveTags(tags);
             saveAuths(apis);
         }
     }
 
+    /**
+     * Description: 清除数据表中原有的权限相关记录（Tag、权限、权限-角色关系）
+     *
+     * @author : Morphling
+     * @date : 2021/2/10 13:22
+     */
+    @Transactional(rollbackFor = Exception.class)
+    private void clearAuthData() {
+        authorityRepository.clearAuthorities();
+        tagRepository.clearAuthorityTags();
+        this.isAuthCleared = true;
+    }
+
+    /**
+     * Description: 将API中Tag数据保存至数据库权限Tag表
+     *
+     * @param tags : tags
+     * @author : Morphling
+     * @date : 2021/2/10 13:22
+     */
     private void saveTags(Set<Tag> tags) {
         tags.forEach(tag -> {
-            if (!CustomApiBuilder.authTags.contains(tag.getName())) {
+            if (overrideAuthority || !CustomApiBuilder.authTags.contains(tag.getName())) {
                 AuthorityTag at = new AuthorityTag();
                 at.setName(tag.getName());
                 at.setDescription(tag.getDescription());
@@ -78,9 +120,16 @@ public class CustomApiBuilder implements ApiListingBuilderPlugin {
         });
     }
 
+    /**
+     * Description: 将API中资源数据保存至数据库权限表，并根据配置将其赋予admin角色
+     *
+     * @param apis : apis
+     * @author : Morphling
+     * @date : 2021/2/10 13:23
+     */
     private void saveAuths(List<ApiDescription> apis) {
         apis.forEach(api -> {
-            if (!CustomApiBuilder.auths.contains(api.getPath() + ";" + api.getOperations().get(0).getMethod().name())) {
+            if (overrideAuthority || !CustomApiBuilder.auths.contains(api.getPath() + CustomApiBuilder.AUTH_JOINER_STR + api.getOperations().get(0).getMethod().name())) {
                 Authority authority = new Authority();
                 authority.setDescription(api.getDescription());
                 authority.setName(api.getOperations().get(0).getSummary());
@@ -93,6 +142,7 @@ public class CustomApiBuilder implements ApiListingBuilderPlugin {
                     authority.setTag(tag);
                 }
                 authority = authorityRepository.save(authority);
+                CustomApiBuilder.auths.add(authority.getAuthority());
                 if (authorizeToAdmin) {
                     authorityRepository.insertIgnoreAdminAuthorities(authority.getId());
                 }
