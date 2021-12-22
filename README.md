@@ -31,7 +31,7 @@ Java后端单模块脚手架工程
 - 初始化用户
   > 用户名：admin 、 test
   > 
-  > 密码：admin
+  > 密码：password
   > 
   > 前端需传入md5加密后的密码，即 5f4dcc3b5aa765d61d8327deb882cf99
   > 
