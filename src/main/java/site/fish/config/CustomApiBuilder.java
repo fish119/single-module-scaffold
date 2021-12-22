@@ -25,8 +25,7 @@ import java.util.Set;
 /**
  * Description: [CustomApiBuilder 根据配置在生成API时将数据同步至数据库的权限表中]
  * Copyright  : Copyright (c) 2021
- * Company    : 沈阳云创工业智能技术有限公司
- *
+
  * @author : Morphling
  * @version : 1.0
  * @date : 2021/2/8 21:56
@@ -53,7 +52,7 @@ public class CustomApiBuilder implements ApiListingBuilderPlugin {
     @Value("${override-authority-from-swagger}")
     private boolean overrideAuthority;
     /**
-     * 是否已情况原有权限数据
+     * 是否已清空原有权限数据
      */
     private boolean isAuthCleared = false;
 
@@ -135,6 +134,10 @@ public class CustomApiBuilder implements ApiListingBuilderPlugin {
                 authority.setName(api.getOperations().get(0).getSummary());
                 authority.setMethod(api.getOperations().get(0).getMethod().name());
                 authority.setUrl(api.getPath());
+                String tmpSummary = api.getOperations().get(0).getSummary();
+
+                int indexOfDot = tmpSummary.indexOf(".");
+                String order = tmpSummary.substring(0,indexOfDot);
                 authority.setSort(Long.parseLong(api.getOperations().get(0).getSummary().substring(0, api.getOperations().get(0).getSummary().indexOf("."))));
                 String tagName = api.getOperations().get(0).getTags().stream().findFirst().orElse(null);
                 if (!ObjectUtils.isEmpty(tagName)) {

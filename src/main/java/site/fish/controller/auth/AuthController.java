@@ -25,8 +25,7 @@ import java.util.HashMap;
 /**
  * Description: [AuthController]
  * Copyright  : Copyright (c) 2021
- * Company    : 沈阳云创工业智能技术有限公司
- *
+
  * @author : Morphling
  * @version : 1.0
  * @date : 2021/1/30 20:07
@@ -52,7 +51,7 @@ public class AuthController {
      * @author : Morphling
      * @date : 2021/1/27 21:08
      */
-    @ApiOperation("1.登录")
+    @ApiOperation(value="1.登录")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<HashMap<String, String>> login(@RequestBody @Valid LoginVo loginVo) {
         HashMap<String, String> map = new HashMap<>(2);

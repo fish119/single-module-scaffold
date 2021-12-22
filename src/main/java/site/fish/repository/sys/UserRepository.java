@@ -1,5 +1,6 @@
 package site.fish.repository.sys;
 
+import com.sun.xml.bind.v2.TODO;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -10,8 +11,7 @@ import site.fish.repository.BaseRepository;
 /**
  * Description: [User Repository]
  * Copyright  : Copyright (c) 2021
- * Company    : 沈阳云创工业智能技术有限公司
- *
+
  * @author : Morphling
  * @version : 1.0
  * @date : 2021/1/30 18:35
@@ -26,7 +26,7 @@ public interface UserRepository extends BaseRepository<User> {
      * @author : Morphling
      * @date : 2021/1/27 17:03
      */
-    @Query("from User u join fetch u.roles r join fetch r.authorities where u.username=:username")
+    @Query("from User u left join fetch u.roles r left join fetch r.authorities where u.username=:username")
     User findByUsername(@Param("username") final String username);
 
     /**
