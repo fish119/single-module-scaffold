@@ -17,7 +17,7 @@ Java后端单模块脚手架工程
 
 ## 认证及权限
 ### 相关文件及作用
-![Spring Security Architecture](https://bs-uploads.toptal.io/blackfish-uploads/uploaded_file/file/412345/image-1602672495860.085-952930c83f53503d7e84d1371bec3775.png)
+![Spring Security Architecture](https://raw.githubusercontent.com/fish119/single-module-scaffold/master/springsecurity.webp)
 - 相关类均在已下包中：site.fish.security
 - site.fish.security.WebSecurityConfig：Spring Security 配置类
 - site.fish.security.AccessDecisionManagerImpl：权限验证访问决策管理器
