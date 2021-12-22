@@ -1,0 +1,69 @@
+server:
+  tomcat:
+    uri-encoding: UTF-8
+  port: 9001
+  error:
+    include-message: always
+    include-stacktrace: on_trace_param
+    include-binding-errors: always
+logging:
+  config: classpath:logback-spring.xml
+  level:
+    root: INFO
+    org.springframework.web: WARN
+    org.springframework.security: WARN
+#    org.hibernate.SQL: DEBUG
+spring:
+  http:
+    encoding:
+      force: true
+      charset: UTF-8
+      enabled: true
+  main:
+    banner-mode: 'off'
+  datasource:
+    url: jdbc:mysql://localhost:3306/single_module_scaffold?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: fish119
+    hikari:
+      #最小空闲连接数量
+      minimum-idle: 2
+      ## 空闲连接存活最大时间，默认600000（10分钟）
+      idle-timeout: 180000
+      ## 连接池最大连接数，默认是10
+      maximum-pool-size: 5
+      ## 池中连接的最长生命周期，值0表示无限生命周期，默认1800000即30分钟
+      max-lifetime: 600000
+      ## 数据库连接超时时间,默认30秒，即30000
+      connection-timeout: 10000
+      connection-test-query: SELECT 1
+  jpa:
+    show-sql: true
+    hibernate:
+      ##如使用Flyway管理数据库，则设置为none，否则可以设置为update
+      ddl-auto: update
+      show-sql: true
+      format_sql: true
+    open-in-view: false
+  flyway:
+    enabled: false # 正式环境才开启:设置为true
+    clean-disabled: true # 禁用数据库清理
+    schemas: single_module_scaffold
+    #    encoding: UTF-8
+    #    locations: classpath:/db
+    # flyway 会在库中创建此名称元数据表，用于记录所有版本演化和状态,同一个库不同项目可能冲突，可加后缀设置为每个项目一张表来记录
+#    table: flyway_schema_history_single_module_scaffold
+#    baseline-version: 1 # 基线版本默认开始序号 默认为 1
+#    baseline-on-migrate: true #  针对非空数据库是否默认调用基线版本,为空的话默认会调用基线版本
+springfox:
+  documentation:
+    swagger-ui:
+      enabled: false
+# 自定义参数
+## 是否根据swagger更新权限及权限组数据表
+create-authority-from-swagger: true
+## 是否覆盖原有权限数据（清空原有，重新生成）
+override-authority-from-swagger: false
+## 是否自动将更新的权限赋予admin角色
+auto-authorize-to-admin: true
