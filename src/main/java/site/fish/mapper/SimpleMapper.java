@@ -1,4 +1,4 @@
-package site.fish.vo.mapper;
+package site.fish.mapper;
 
 import site.fish.entity.BaseEntity;
 import site.fish.vo.sys.SimpleVo;

@@ -6,8 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import site.fish.entity.sys.Role;
 import site.fish.repository.sys.RoleRepository;
 import site.fish.service.BaseService;
-import site.fish.vo.mapper.RoleMapper;
-import site.fish.vo.mapper.UserMapper;
+import site.fish.mapper.RoleMapper;
+import site.fish.mapper.UserMapper;
 import site.fish.vo.sys.RoleVo;
 import site.fish.vo.sys.UserVo;
 

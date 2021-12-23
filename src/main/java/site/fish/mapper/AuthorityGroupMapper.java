@@ -1,4 +1,4 @@
-package site.fish.vo.mapper;
+package site.fish.mapper;
 
 import org.mapstruct.Mapper;
 import site.fish.entity.sys.AuthorityGroup;

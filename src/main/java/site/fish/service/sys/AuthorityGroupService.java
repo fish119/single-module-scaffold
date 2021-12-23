@@ -7,8 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 import site.fish.entity.sys.AuthorityGroup;
 import site.fish.repository.sys.AuthorityGroupRepository;
 import site.fish.service.BaseService;
-import site.fish.vo.mapper.AuthorityGroupMapper;
-import site.fish.vo.mapper.SimpleMapper;
+import site.fish.mapper.AuthorityGroupMapper;
+import site.fish.mapper.SimpleMapper;
 import site.fish.vo.sys.AuthorityGroupVo;
 import site.fish.vo.sys.SimpleVo;
 

@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import site.fish.entity.BaseEntity;
 import site.fish.repository.BaseRepository;
 import site.fish.vo.BaseVo;
-import site.fish.vo.mapper.BaseMapper;
+import site.fish.mapper.BaseMapper;
 
 /**
  * Description: [BaseService]
